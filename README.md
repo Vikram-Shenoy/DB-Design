@@ -1,4 +1,5 @@
 # DB-Design
+## Purpose of this repo
 - Storing various DB schema ideas for event detection
 - Playing around with code to test initial ideas in code
 
