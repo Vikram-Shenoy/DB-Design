@@ -1,10 +1,10 @@
 import pandas as pd
 
 # === Load CSV files ===
-player_a = pd.read_csv("./tracked/player_a_tracking.csv")
-player_b = pd.read_csv("./tracked/player_b_tracking.csv")
-player_c = pd.read_csv("./tracked/player_c_tracking.csv")
-ball = pd.read_csv("./tracked/ball_tracking.csv")
+player_a = pd.read_csv("./position_data/player_a_tracking.csv")
+player_b = pd.read_csv("./position_data/player_b_tracking.csv")
+player_c = pd.read_csv("./position_data/player_c_tracking.csv")
+ball = pd.read_csv("./position_data/ball_tracking.csv")
 
 # === Merge all into a single DataFrame by timestamp ===
 df = pd.DataFrame({
@@ -37,11 +37,10 @@ df['in_possession'] = df.apply(detect_possession, axis=1)
 # Summarize total possession time (in seconds)
 possession_summary = df['in_possession'].value_counts().reset_index()
 possession_summary.columns = ['player', 'seconds_in_possession']
-print("Possession Summary:")
-print(possession_summary)
-# Optionally, save the full possession timeline for analysis
-df.to_csv("possession_timeline.csv", index=False)
 
+# Optionally, save the full possession timeline for analysis
+df.to_csv("./Outputs/possession_timeline.csv", index=False)
+possession_summary.to_csv("./Outputs/possesion_summary.csv", index=False)
 # === Pass Detection Logic ===
 # The idea here is to detect when possession switches from one player (say, A) to another (say, B)
 # Even if there are gaps (None) in between, we want to detect a pass once the ball reaches a new player's position.
@@ -70,8 +69,6 @@ for idx, row in df.iterrows():
 
 # Convert the list of pass events to a DataFrame
 pass_log = pd.DataFrame(pass_events)
-print("\nPass Log:")
-print(pass_log)
 
 # Optionally, save the pass events to CSV for later use:
-pass_log.to_csv("pass_log.csv", index=False)
+pass_log.to_csv("./Outputs/pass_log.csv", index=False)
